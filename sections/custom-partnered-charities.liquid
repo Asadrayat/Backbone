@@ -1,0 +1,343 @@
+<style>
+  .section-container--{{ section.id }}{
+    margin-top: {{ section.settings.margin_top | append:'px' }};
+    margin-bottom: {{ section.settings.margin_bottom | append:'px' }};
+    padding-top: {{ section.settings.padding_top | append:'px' }};
+    padding-bottom: {{ section.settings.padding_bottom | append:'px' }};
+    background-color: {{ section.settings.bg-color }};
+    overflow: hidden;
+  }
+  @media screen and (max-width: 768px){
+    .section-container--{{ section.id }}{
+      margin-top: {{ section.settings.margin_top_mobile | append:'px' }};
+      margin-bottom: {{ section.settings.margin_bottom_mobile | append:'px'  }};
+      padding-top: {{ section.settings.padding_top_mobile | append:'px' }};
+      padding-bottom: {{ section.settings.padding_bottom_mobile | append:'px' }};
+    }
+  }
+  .section-container--{{ section.id }}{
+    .section-wrapper--{{ section.id }}{
+       @media(max-width: 768px){
+         padding: 0;    
+      }
+    }
+   .content-wrapper{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      /* justify-items: center;      */
+     @media(max-width: 768px){
+       grid-template-columns: 1fr;       
+     }
+   }
+    .img-wrapper img{
+      /* width: 100%; */
+      height: auto;
+      object-fit: cover;
+    }
+    .right-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; 
+      background: #F7F2ED;
+      width: 100%;
+      padding: 54px 40px;
+      gap: 24px;
+     @media(max-width: 768px){
+      padding: 16px;
+       gap: 12px;
+     }
+    }
+    /* .left-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; 
+      background: #F7F2ED;
+      width: 100%;
+      padding: 48px 80px;
+      gap: 12px;
+     @media(max-width: 768px){
+      padding: 16px 48px;
+       gap: 12px;
+     }
+    } */
+    .left-container{
+      background-color: #F7F2ED;
+      padding: 48px 80px;
+     @media(max-width: 768px){
+      padding: 16px 48px;
+     }
+    }
+    .left-container h3{
+      margin: 0 0 8px 0;
+      color: var(--Content-Base-main, #1F2937);
+      text-align: center;
+      font-family: Satoshi Medium;
+      font-size: var(--Font-Size-Heading-H3, 24px);
+      font-style: normal;
+      font-weight: 500;
+      line-height: 28px; /* 116.667% */
+      letter-spacing: -0.48px;   
+     @media(max-width: 768px){
+        font-size: 18px;
+     }
+    }
+    .left-container p{
+      margin: 0;
+      color: var(--Content-Base-main, #1F2937);
+      font-family: Satoshi;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 20px;  
+      text-align: center;
+    }
+    .logo-title{
+      margin: 0;
+      color: #000;
+      
+      /* Headings/H3 */
+      font-family: Satoshi;
+      font-size: var(--Font-Size-Heading-H3, 24px);
+      font-style: normal;
+      font-weight: 500;
+      line-height: 28px; /* 116.667% */
+      letter-spacing: -0.48px;  
+     @media(max-width: 768px){
+        font-size: 18px;
+     }
+    }
+    .img-wrapper{
+      display: flex;
+      padding: var(--Spacing-Container-0, 0px);
+      justify-content: center;
+      align-items: center;
+      gap: var(--Spacing-Container-md, 24px);
+       @media(max-width: 768px){
+
+       }
+    }
+    .text-container{
+      max-width: 600px;
+       @media(max-width: 768px){
+          max-width: 380px;  
+       }
+    }
+    .swiper-{{ section.id }}{
+      height: 100%;
+    }
+    .swiper-wrapper--{{ section.id }}{
+      max-width: 500px;   
+     @media(max-width: 768px){
+        max-width: 260px;  
+     }
+    }
+    .swiper-slide--{{section.id}}{
+      background-color: #F7F2ED;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+</style>
+<section class="section-container--{{ section.id }}">
+  <div class="section-wrapper--{{ section.id }} wrapper--full-padded">
+    <div class="content-wrapper">
+      <div class="right-container">
+        <h3 class="logo-title">{{ section.settings.title }}</h3>
+        <div class="img-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'logo' %}
+            {% if block.settings.img != null %}
+              {{
+                block.settings.img
+                | image_url: width: block.settings.img.width
+                | image_tag: class: ''
+              }}
+            {% else %}
+              {{ 'image' | placeholder_svg_tag }}
+            {% endif %}   
+          {% endif %}
+        {% endfor %}
+        </div>
+      </div>
+      <div class="left-container">
+        <div class="swiper swiper-{{ section.id }}">
+          <div class="swiper-wrapper swiper-wrapper--{{ section.id }}">
+            {% for block in section.blocks %}
+              {% if block.type == 'slide' %}
+                <div class="swiper-slide swiper-slide--{{section.id}}">
+                  <div class="text-container">
+                    <h3>{{ block.settings.subtitle }}</h3>
+                    <p>{{ block.settings.des }}</p>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    new Swiper(".swiper-{{ section.id }}", {
+      slidesPerView: 1,
+      effect: "fade",
+      fadeEffect: {
+        crossFade: true, 
+      },
+      speed: 1500, 
+      autoplay: {
+        delay: 3000, 
+        disableOnInteraction: false,
+      },
+      loop: true,
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Partnered Charities",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "color",
+      "id": "bg-color",
+      "label": "Background Color"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top  (Mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom  (Mobile)",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Company Logo",
+      "type": "logo",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Logo"
+        }
+      ]
+    },
+    {
+      "name": "Slide Text",
+      "type": "slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "des",
+          "label": "Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Partnered Charities"
+    }
+  ]
+}
+{% endschema %}

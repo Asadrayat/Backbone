@@ -1,0 +1,261 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "collection-image-with-title",
+      "disabled": true,
+      "settings": {
+        "banner_height": "one-third-height",
+        "text_position": "middle-center",
+        "show_image": true,
+        "text_color": "text-dark",
+        "overlay_opacity": 10,
+        "bg_color_secondary": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_breadcrumbs_U6VjDD": {
+      "type": "custom-breadcrumbs",
+      "disabled": true,
+      "settings": {
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 40,
+        "padding_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "section_banner_image_6kjDC4": {
+      "type": "section-banner-image",
+      "blocks": {
+        "subheading_CjwJrB": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Welcome to</p>",
+            "size": 100
+          }
+        },
+        "heading_7yTCPU": {
+          "type": "heading",
+          "settings": {
+            "text": "<p>Adult Collection</p>",
+            "size": 120,
+            "heading_highlight_type": "underline-hand-drawn",
+            "highlight_color": "#000000",
+            "highlight_text_color": ""
+          }
+        },
+        "text_gfhcDt": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "size": 100
+          }
+        },
+        "button_yWnE6q": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "stacked_button": false,
+            "button_1_text": "Shop Now",
+            "button_1_link": "shopify://collections/all",
+            "button_1_color": "btn--white",
+            "button_1_style": "btn--solid",
+            "button_1_size": "btn--small",
+            "button_2_text": "",
+            "button_2_link": "",
+            "button_2_color": "btn--black",
+            "button_2_style": "btn--solid",
+            "button_2_size": "btn--small"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_CjwJrB",
+        "heading_7yTCPU",
+        "text_gfhcDt",
+        "button_yWnE6q"
+      ],
+      "settings": {
+        "height": "original-height",
+        "enable_mobile_height": false,
+        "mobile_height": "four-fifty-height-mobile",
+        "image": "shopify://shop_images/banner-backbone.png",
+        "image_mobile": "shopify://shop_images/IMG_1552_d2759bdb-a7de-4820-87d8-088dec5f2404.jpg",
+        "overlay_opacity": 0,
+        "transition": "zoom-out",
+        "enable_zoom_animation": true,
+        "enable_card_scrolling": false,
+        "increase_border_radius": true,
+        "text_width": "narrow",
+        "text_position": "center",
+        "text_alignment": "text-center",
+        "text_color": "text-dark",
+        "width": "wrapper--full",
+        "padding_top": 0,
+        "padding_bottom": 24
+      }
+    },
+    "8d9a9dcc-b650-4240-8dbe-558bd59ba535": {
+      "type": "section-text",
+      "blocks": {
+        "template--21524360200470__8d9a9dcc-b650-4240-8dbe-558bd59ba535-heading-1": {
+          "type": "heading",
+          "settings": {
+            "text": "<p>{{ collection.title }}</p>",
+            "size": 100,
+            "heading_highlight_type": "italics",
+            "highlight_color": "#d43747",
+            "highlight_text_color": "#000000"
+          }
+        },
+        "template--21524360200470__8d9a9dcc-b650-4240-8dbe-558bd59ba535-text-1": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>{{ collection.title }}</p>",
+            "size": 100
+          }
+        }
+      },
+      "block_order": [
+        "template--21524360200470__8d9a9dcc-b650-4240-8dbe-558bd59ba535-heading-1",
+        "template--21524360200470__8d9a9dcc-b650-4240-8dbe-558bd59ba535-text-1"
+      ],
+      "settings": {
+        "text_position": "left",
+        "bg_color_secondary": false,
+        "text_color": "text-dark",
+        "width": "wrapper--full-padded",
+        "padding_top": 16,
+        "padding_bottom": 0
+      }
+    },
+    "subcollections": {
+      "type": "subcollections",
+      "disabled": true,
+      "settings": {
+        "subcollections": [],
+        "limit": 8,
+        "layout": "grid",
+        "image_source": "collection",
+        "image_aspect_ratio": 0.6,
+        "image_overlay_opacity": 10,
+        "bg_color": "",
+        "text_color": "text-light",
+        "padding_top": 30,
+        "padding_bottom": 14
+      }
+    },
+    "main": {
+      "type": "collection-product-variants",
+      "settings": {
+        "show_breadcrumbs": false,
+        "enable_sorting": false,
+        "enable_filters": false,
+        "filters_layout": "open",
+        "show_more": false,
+        "filter_mode": "default",
+        "bg_color": "",
+        "padding_top": 30,
+        "padding_bottom": 60
+      }
+    },
+    "custom_collection_list_FXGjBL": {
+      "type": "custom-collection-list",
+      "blocks": {
+        "block_CLEH4Q": {
+          "type": "block",
+          "settings": {
+            "url": "shopify://collections/hoodies",
+            "img": "shopify://shop_images/Hero_Image_3_ac4c1b72-e810-47b5-98f4-3f50d2ccc443.png",
+            "title": "BEST SELLER",
+            "des": "Perfect For Any Season"
+          }
+        },
+        "block_ajVwpj": {
+          "type": "block",
+          "settings": {
+            "url": "shopify://collections/bundles-sets",
+            "img": "shopify://shop_images/Hero_Image_4_750804f7-ee5a-450c-8a88-888d1c9a589a.png",
+            "title": "FOR ALL AGE",
+            "des": "Elevate your family's style with our latest collections!"
+          }
+        }
+      },
+      "block_order": ["block_CLEH4Q", "block_ajVwpj"],
+      "settings": {
+        "bg-color": "",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 24,
+        "padding_bottom": 24,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "custom_icon_row_YGjzVe": {
+      "type": "custom-icon-row",
+      "blocks": {
+        "block_q49rah": {
+          "type": "block",
+          "settings": {
+            "title": "Save Up-to $45 Site-wide",
+            "img": "shopify://shop_images/budgeting_1.png"
+          }
+        },
+        "block_ArKNgJ": {
+          "type": "block",
+          "settings": {
+            "title": "Free Shipping on Orders Over $159",
+            "img": "shopify://shop_images/credit-card_1.png"
+          }
+        },
+        "block_gnttfz": {
+          "type": "block",
+          "settings": {
+            "title": "10% Of Profits Go To Humanitarian Aid",
+            "img": "shopify://shop_images/solidarity_1.png"
+          }
+        }
+      },
+      "block_order": ["block_q49rah", "block_ArKNgJ", "block_gnttfz"],
+      "settings": {
+        "bg-color": "#f7f2ed",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "custom_breadcrumbs_U6VjDD",
+    "section_banner_image_6kjDC4",
+    "8d9a9dcc-b650-4240-8dbe-558bd59ba535",
+    "subcollections",
+    "main",
+    "custom_collection_list_FXGjBL",
+    "custom_icon_row_YGjzVe"
+  ]
+}

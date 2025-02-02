@@ -1,0 +1,375 @@
+{% assign id = section.id %}
+<style>
+    #shopify-section-{{ id }} {
+     margin-top: {{ section.settings.margin_top }}px;
+     margin-bottom: {{ section.settings.margin_bottom }}px;
+     padding-top: {{ section.settings.padding_top }}px;
+     padding-bottom: {{ section.settings.padding_bottom }}px;
+     p{
+       margin: 0;
+     }
+    }
+    .heading-{{ id }} {
+       margin: 0 0 24px 0;
+      @media(max-width: 768px){
+        margin: 0 0 16px 0;
+        text-align: center;
+      }
+    }
+    .wrapper-{{ id }} {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      @media(max-width: 768px){
+        grid-template-columns: 1fr;
+      }
+    }
+    .wrapper-{{ id }} .feature__img{
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      aspect-ratio: 1.1;
+      @media(max-width: 500px){
+        aspect-ratio: unset;
+      }
+    }
+    .wrapper-{{ id }} .block{
+      position: relative;
+      .svg_wrapper{
+        position: absolute;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+      }
+    }
+    .wrapper-{{ id }} .info{
+      max-height: 0;
+      opacity: 0;
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 450px;
+      /* width: 70%; */
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      border-radius: var(--rounded-none, 0px);
+      background: #FFF;
+      padding: 16px;
+      gap: 16px;
+      transiton: all 0.1s;
+      @media(max-width: 768px){
+        grid-template-columns: 1fr;
+        width: calc(100% - 20px);
+      }
+      img{
+        max-width: 160px;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1.1;
+        object-fit: cover;
+        @media(max-width: 768px){
+          max-width: 125px;
+        }
+        @media(max-width: 500px){
+          display: none;
+        }
+      }
+      .pd__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        a{
+          width: max-content;
+          padding: 12px 40px;
+          @media(max-width: 768px){
+              width: 100%;
+            margin: 16px 0 0 0;
+          }
+        }
+      }
+    }
+   .wrapper-{{ id }} .info.active{
+     max-height: unset;
+     opacity: 1;
+   }
+   .wrapper-{{ id }} .info__title span{
+      margin-left: 8px;
+   }
+   .wrapper-{{ id }} .saved__money{
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(-24px, 24px);
+     @media(max-width: 768px){
+       width: max-content;
+     }
+   }
+  .icon-effect{
+    width: 72px;
+    height: auto;
+  }
+  @media screen and (max-width: 890px){
+     #shopify-section-{{ id }} {
+       margin-top: {{ section.settings.margin_top-m }}px;
+       margin-bottom: {{ section.settings.margin_bottom-m }}px;
+       padding-top: {{ section.settings.padding_top-m }}px;
+       padding-bottom: {{ section.settings.padding_bottom-m }}px;
+    }
+  }
+</style>
+<section class="{% unless section.settings.full_width %}wrapper--full-padded wrapper--no-full{% endunless %}">
+  <div class="container-{{ id }}">
+    <div class="heading-{{ id }}">
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.subtitle }}</p>
+    </div>
+    <div class="wrapper-{{ id }}">
+      {% for block in section.blocks %}
+        {% assign product = block.settings.product %}
+        <div class="block block--{{ block.id }}">
+          <style>
+            .block--{{ block.id }} .svg_wrapper{
+              top: {{ block.settings.icon_vr }}%;
+              left: {{ block.settings.icon_hr }}%;
+            }
+          </style>
+          {% if block.settings.image %}
+            <span class="image-wrap">
+              {% render 'responsive-img' with image: block.settings.image %}
+            </span>
+          {% else %}
+            <span class="image-wrap">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </span>
+          {% endif %}
+          <div class="info" id="pd__container-{{ block.id }}" data-stl-container>
+            {% if product.featured_image %}
+              {{ product.featured_image | image_url: width: '200' | image_tag }}
+            {% endif %}
+            <div class="pd__info">
+              <div class="info__title">
+                <h4>{{ product.title }}</h4>
+                <p>
+                  {{ product.price | money -}}
+                  <span class="line-through">{{ product.compare_at_price | money }}</span>
+                </p>
+              </div>
+              <a class="btn btn--solid btn--small btn--primary" href="{{ product.url }}">
+                {{- block.settings.btn_text -}}
+              </a>
+            </div>
+          </div>
+          <div class="svg_wrapper" id="stl_icon--{{ block.id }}" data-svg>
+            {% if section.settings.svg != blank %}
+              {% comment %}{{ section.settings.svg }}{% endcomment %}
+              <div class="img-wrapper">
+                {{
+                  section.settings.svg
+                  | image_url: width: section.settings.svg.width
+                  | image_tag: class: 'icon-effect'
+                }}
+              </div>
+            {% endif %}
+          </div>
+          {% assign saved_money = product.compare_at_price | minus: product.price %}
+          <h4 class="saved__money btn btn--solid btn--small btn--primary">
+            SAVE {{ saved_money | money_without_trailing_zeros }}
+          </h4>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".wrapper-{{ id }} .svg_wrapper").forEach(icon =>{
+      icon.addEventListener("click", function(e){
+        let  parent = icon.closest(".block")
+        let container = parent.querySelector(".info")
+        container.classList.toggle("active")
+      })
+    })
+
+    document.querySelectorAll(".block").forEach(block => {
+      block.addEventListener("click", e => {
+       if(e.target.classList.contains("feature__img")) {
+        let parent = e.target.closest(".block")
+        let container = parent.querySelector(".info")
+        container.classList.remove("active")
+       }
+      })
+    })
+  })
+</script>
+
+{% schema %}
+{
+  "name": "Custom Shop the Look",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "BUNDLES & SETS"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sub Title",
+      "default": "Comfortable Unisex Full Sets For Active and Loungewear."
+    },
+    {
+      "type": "image_picker",
+      "id": "svg",
+      "label": "Shop the look icon"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Spacing (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top  (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom  (Mobile)",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content",
+      "name": "Content",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Featured Image",
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+        },
+        {
+          "type": "text",
+          "id": "btn_text",
+          "label": "Button Label",
+          "default": "Quick Buy"
+        },
+        {
+          "type": "header",
+          "content": "Icon Position"
+        },
+        {
+          "type": "range",
+          "id": "icon_vr",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Varticle",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "icon_hr",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Horizontal",
+          "default": 50
+        },
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name": "Custom Shop the Look"
+    }
+  ]
+}
+{% endschema %}

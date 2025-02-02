@@ -1,0 +1,70 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "blog",
+      "settings": {
+        "default_color": "accent",
+        "blog_style": "standard",
+        "post_columns": 4,
+        "image_aspect_ratio": 0.7,
+        "show_rss_icon": false,
+        "show_date": false,
+        "show_author": false,
+        "show_tags": false,
+        "show_comments_count": false,
+        "tag_alignment": "center",
+        "bg_color_secondary": false,
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
+    "custom_icon_row_JCNnD3": {
+      "type": "custom-icon-row",
+      "blocks": {
+        "block_q49rah": {
+          "type": "block",
+          "settings": {
+            "title": "Save Up-to $45 Site-wide",
+            "img": "shopify://shop_images/budgeting_1.png"
+          }
+        },
+        "block_ArKNgJ": {
+          "type": "block",
+          "settings": {
+            "title": "Free Shipping on Orders Over $159",
+            "img": "shopify://shop_images/credit-card_1.png"
+          }
+        },
+        "block_gnttfz": {
+          "type": "block",
+          "settings": {
+            "title": "10% Of Profits Go To Humanitarian Aid",
+            "img": "shopify://shop_images/solidarity_1.png"
+          }
+        }
+      },
+      "block_order": ["block_q49rah", "block_ArKNgJ", "block_gnttfz"],
+      "settings": {
+        "bg-color": "#f7f2ed",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
+    }
+  },
+  "order": ["main", "custom_icon_row_JCNnD3"]
+}

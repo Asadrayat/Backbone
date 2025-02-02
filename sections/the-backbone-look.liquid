@@ -1,0 +1,574 @@
+{% assign id = section.id %}
+<style>
+    #shopify-section-{{ id }} {
+     margin-top: {{ section.settings.margin_top }}px;
+     margin-bottom: {{ section.settings.margin_bottom }}px;
+     padding-top: {{ section.settings.padding_top }}px;
+     padding-bottom: {{ section.settings.padding_bottom }}px;
+     p{
+       margin: 0;
+     }
+    }
+    .heading-{{ id }} {
+       margin: 0 0 24px 0;
+      @media(max-width: 768px){
+        margin: 0 0 16px 0;
+        text-align: center;
+      }
+    }
+    .wrapper-{{ id }} .container{
+      position: relative;
+    }
+    .wrapper-{{ id }} {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: center;
+      @media(max-width: 768px){
+        grid-template-columns: 1fr;
+      }
+    }
+    .wrapper-{{ id }} .image-wrap img{
+      object-fit: cover;
+      aspect-ratio: 1;
+      @media(max-width: 500px){
+        /* aspect-ratio: unset; */
+      }
+    }
+    .wrapper-{{ id }} .svg_wrapper{
+        position: absolute;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        z-index: 9;
+    }
+    .wrapper-{{ id }} .block{
+      /* position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0; */
+    }
+    .wrapper-{{ id }} .info{
+      opacity: 0;
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      transform-origin: center;
+      width: 100%;
+      max-width: 450px;
+      z-index: 10;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      border-radius: var(--rounded-none, 0px);
+      background: #FFF;
+      padding: 16px;
+      gap: 16px;
+      transition: all 0.2s ease-in;
+      @media(max-width: 768px){
+        grid-template-columns: 1fr;
+        width: calc(100% - 20px);
+      }
+      img{
+        max-width: 160px;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1.1;
+        object-fit: cover;
+        @media(max-width: 768px){
+          max-width: 125px;
+        }
+        @media(max-width: 500px){
+          display: none;
+        }
+      }
+      .pd__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        a{
+          width: max-content;
+          padding: 12px 40px;
+          @media(max-width: 768px){
+              width: 100%;
+            margin: 16px 0 0 0;
+          }
+        }
+      }
+    }
+   .wrapper-{{ id }} .info.active{
+     transform: translateX(-50%) scale(1);
+     opacity: 1;
+   }
+   .wrapper-{{ id }} .info__title span{
+      margin-left: 8px;
+   }
+   .wrapper-{{ id }} .saved__money{
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(-24px, 24px);
+     @media(max-width: 768px){
+       width: max-content;
+     }
+   }
+  .icon-effect{
+    width: 40px;
+    height: auto;
+  }
+  @media screen and (max-width: 890px){
+     #shopify-section-{{ id }} {
+       margin-top: {{ section.settings.margin_top-m }}px;
+       margin-bottom: {{ section.settings.margin_bottom-m }}px;
+       padding-top: {{ section.settings.padding_top-m }}px;
+       padding-bottom: {{ section.settings.padding_bottom-m }}px;
+    }
+  }
+</style>
+<section class="{% unless section.settings.full_width %}wrapper--full-padded wrapper--no-full{% endunless %}">
+  <div class="container-{{ id }}">
+    <div class="heading-{{ id }}">
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.subtitle }}</p>
+    </div>
+    <div class="wrapper-{{ id }}">
+      <div class="container">
+        {% if section.settings.image1 %}
+          <span class="image-wrap">
+            {{ section.settings.image1 | image_url: width: section.settings.image1.width | image_tag }}
+          </span>
+        {% else %}
+          <span class="image-wrap">
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </span>
+        {% endif %}
+        {% for block in section.blocks %}
+          {% if block.type == 'content1' %}
+            {% assign product = block.settings.product %}
+            <div class="svg_wrapper div--{{ forloop.index }}" id="stl_icon--{{ block.id }}" data-svg>
+              {% if section.settings.svg != blank %}
+                {% comment %}{{ section.settings.svg }}{% endcomment %}
+                <div class="img-wrapper">
+                  {{
+                    section.settings.svg
+                    | image_url: width: section.settings.svg.width
+                    | image_tag: class: 'icon-effect'
+                  }}
+                </div>
+              {% endif %}
+            </div>
+            <style>
+              #stl_icon--{{ block.id }} {
+                 top: {{ block.settings.icon_vr }}%;
+                 left: {{ block.settings.icon_hr }}%;
+                 @media(max-width: 768px){
+                   top: {{ block.settings.icon_vr_m }}%;
+                   left: {{ block.settings.icon_hr_m }}%;
+                 }
+               }
+            </style>
+            <div id="block--{{ block.id }}" class="block  div--{{ forloop.index }}">
+              <div class="info" id="pd__container-{{ block.id }}" data-stl-container>
+                {% if product.featured_image %}
+                  {{ product.featured_image | image_url: width: product.featured_image.width | image_tag }}
+                {% endif %}
+                <div class="pd__info">
+                  <div class="info__title">
+                    <h4>{{ product.title }}</h4>
+                    <p>
+                      {{ product.price | money -}}
+                      <span class="line-through">{{ product.compare_at_price | money }}</span>
+                    </p>
+                  </div>
+                  <a class="btn btn--solid btn--small btn--primary" href="{{ product.url }}">
+                    {{- block.settings.btn_text -}}
+                  </a>
+                </div>
+              </div>
+              {% assign saved_money = product.compare_at_price | minus: product.price %}
+              {% comment %}
+                <h4 class="saved__money btn btn--solid btn--small btn--primary">
+                  SAVE {{ saved_money | money_without_trailing_zeros }}
+                </h4>
+              {% endcomment %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="container">
+        {% if section.settings.image2 %}
+          <span class="image-wrap">
+            {% render 'responsive-img' with image: section.settings.image2 %}
+          </span>
+        {% else %}
+          <span class="image-wrap">
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </span>
+        {% endif %}
+        {% for block in section.blocks %}
+          {% if block.type == 'content2' %}
+            {% assign product = block.settings.product %}
+            <div class="svg_wrapper div--{{ forloop.index }}" id="stl_icon--{{ block.id }}" data-svg>
+              {% if section.settings.svg != blank %}
+                {% comment %}{{ section.settings.svg }}{% endcomment %}
+                <div class="img-wrapper">
+                  {{
+                    section.settings.svg
+                    | image_url: width: section.settings.svg.width
+                    | image_tag: class: 'icon-effect'
+                  }}
+                </div>
+              {% endif %}
+            </div>
+            <style>
+              #stl_icon--{{ block.id }} {
+                 top: {{ block.settings.icon_vr }}%;
+                 left: {{ block.settings.icon_hr }}%;
+                 @media(max-width: 768px){
+                   top: {{ block.settings.icon_vr_m }}%;
+                   left: {{ block.settings.icon_hr_m }}%;
+                 }
+               }
+            </style>
+            <div class="block div--{{ forloop.index }}" id="block--{{ block.id }}">
+              <div class="info" id="pd__container-{{ block.id }}" data-stl-container>
+                {% if product.featured_image %}
+                  <span class="image-wrap">
+                    {% render 'responsive-img' with image: product.featured_image %}
+                  </span>
+                {% else %}
+                  <span class="image-wrap">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </span>
+                {% endif %}
+                <div class="pd__info">
+                  <div class="info__title">
+                    <h4>{{ product.title }}</h4>
+                    <p>
+                      {{ product.price | money -}}
+                      <span class="line-through">{{ product.compare_at_price | money }}</span>
+                    </p>
+                  </div>
+                  <a class="btn btn--solid btn--small btn--primary" href="{{ product.url }}">
+                    {{- block.settings.btn_text -}}
+                  </a>
+                </div>
+              </div>
+              {% assign saved_money = product.compare_at_price | minus: product.price %}
+            </div>
+          {% endif %}
+        {% endfor %}
+        {% comment %}
+            <h4 class="saved__money btn btn--solid btn--small btn--primary hidden">
+            SAVE {{ saved_money | money_without_trailing_zeros }}
+          </h4>
+        {% endcomment %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+document.querySelectorAll(".svg_wrapper").forEach(svgWrapper => {
+  svgWrapper.addEventListener("click", function() {
+    // Get the shared index class from the clicked .svg_wrapper
+    const indexClass = Array.from(this.classList).find(cls => cls.startsWith("div--"));    
+
+    if (indexClass) {
+      document.querySelectorAll(".block").forEach(block => {
+        let info = block.querySelector(".info");        
+        info.classList.remove("active");
+      });
+      
+      const targetBlock = document.querySelector(`.block.${indexClass} .info`);
+      console.log(targetBlock)
+      console.log(indexClass)
+      if (targetBlock) {
+        targetBlock.classList.add("active");
+      }
+    }
+  });
+});
+
+document.querySelectorAll(".wrapper-{{ id }} .container").forEach(block => {
+  block.addEventListener("click", e => {
+    // Check if the clicked target is not inside .info or .svg_wrapper
+    const clickedInsideInfo = e.target.closest(".info");
+    const clickedInsideSvgWrapper = e.target.closest(".svg_wrapper");
+
+    // If the click wasn't inside .info or .svg_wrapper, remove the 'active' class from all .info elements
+    if (!clickedInsideInfo && !clickedInsideSvgWrapper) {
+      document.querySelectorAll(".block").forEach(b => {
+        let info = b.querySelector(".info");
+        if (info) {
+          info.classList.remove("active");
+        }
+      });
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Backbone Shop the Look",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full Width",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "BUNDLES & SETS"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Sub Title",
+      "default": "Comfortable Unisex Full Sets For Active and Loungewear."
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": "Featured Image 1",
+    },
+    {
+      "type": "image_picker",
+      "id": "image2",
+      "label": "Featured Image 2",
+    },
+    {
+      "type": "image_picker",
+      "id": "svg",
+      "label": "Shop the look icon"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Spacing (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "margin_top-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top  (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom-m",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom  (Mobile)",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content1",
+      "name": "Content 1",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+        },
+        {
+          "type": "text",
+          "id": "btn_text",
+          "label": "Button Label",
+          "default": "Quick Buy"
+        },
+        {
+          "type": "header",
+          "content": "Icon Position"
+        },
+        {
+          "type": "range",
+          "id": "icon_vr",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Varticle",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "icon_hr",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Horizontal",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "Icon Position Mobile"
+        },
+        {
+          "type": "range",
+          "id": "icon_vr_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Varticle MObile",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "icon_hr_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Horizontal Mobile",
+          "default": 50
+        },
+      ]
+    },
+    {
+      "type": "content2",
+      "name": "Content 2",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+        },
+        {
+          "type": "text",
+          "id": "btn_text",
+          "label": "Button Label",
+          "default": "Quick Buy"
+        },
+        {
+          "type": "header",
+          "content": "Icon Position"
+        },
+        {
+          "type": "range",
+          "id": "icon_vr",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Varticle",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "icon_hr",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Horizontal",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "Icon Position Mobile"
+        },
+        {
+          "type": "range",
+          "id": "icon_vr_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Varticle MObile",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "icon_hr_m",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Icon Horizontal Mobile",
+          "default": 50
+        },
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name": "Backbone Shop the Look"
+    }
+  ]
+}
+{% endschema %}
