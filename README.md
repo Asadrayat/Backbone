@@ -1,6 +1,6 @@
-# [Backbone]
+# Backbone
 
-<a href="(https://backbonenyc.co/)">Backbone</a>
+<a href="https://backbonenyc.co">Backbone</a>
 
 Welcome to [Backbone], where style meets functionality! Our carefully curated collection offers a seamless shopping experience for fashion-forward individuals seeking quality and trendsetting designs.
 
